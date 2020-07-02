@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+    <meta charset="UTF-8">
+    <title>MainPage</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+    <h1>HELLO</h1>
+    <div ng-controller="Employee">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    <button ng-click="sortBy('id')">Id</button>
+                </th>
+                <th>
+                    <button ng-click="sortBy('firstName')">First Name</button>
+                </th>
+                <th>
+                    <button ng-click="sortBy('lastName')">Last Name</button>
+                </th>
+            </tr>
+            </thead>
+            <tr ng-repeat="e in employees">
+                <td>{{e.id}}</td>
+                <td>{{e.firstName}}</td>
+                <td>{{e.lastName}}</td>
+                <td>{{e.scheduleTime.startTime}}</td>
+                <td>{{e.scheduleTime.endTime}}</td>
+                <td><button ng-click="deleteEmployee(e.id)">Delete User</button></td>
+            </tr>
+        </table>
+
+    </div>
+    <div ng-controller="Employee" style="display: inline-block; margin-left: 20vw" >
+        <p><b>ADD</b></p>
+        <table>
+            <tr><td><label>First Name: </label></td><td><input type="text" ng-model="name" /></td></tr>
+            <tr><td><label>Last Name: </label></td><td><input type="text" ng-model="surname"></td></tr>
+            <tr><td><label>Start Time: </label></td><td><input type="time" ng-model="start"></td></tr>
+            <tr><td><label>End Name: </label></td><td><input type="time" ng-model="end"></td></tr>
+        </table>
+        <button ng-click="addEmployee(name, surname, start, end)">Save</button>
+    </div>
+    <div ng-controller="Employee">
+        <input type="text" ng-model="searchName">
+        <button ng-click="findByName(searchName)">Find</button>
+        <table class="table">
+            <tr ng-repeat="e in searchEmployees">
+                <td>{{e.id}}</td>
+                <td>{{e.firstName}}</td>
+                <td>{{e.lastName}}</td>
+                <td>{{e.scheduleTime.startTime}}</td>
+                <td>{{e.scheduleTime.endTime}}</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <a href="/diagrams">Diagrams</a>
+    </div>
+</body>
+</html>
