@@ -17,6 +17,10 @@ public class ScheduleTimeController {
         this.repository = repository;
     }
 
+    /**
+     * Method need to get group scheduleTimes for creating chart
+     * @return
+     */
     @GetMapping("diagramInfo")
     public List<TimeDiagramApiModel> getScheduleTimesDiagram(){
         List<TimeDiagram> diagrams = repository.findTimeGroup();

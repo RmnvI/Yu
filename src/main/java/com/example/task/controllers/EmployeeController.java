@@ -32,11 +32,24 @@ public class EmployeeController {
         this.scheduleTimeRepository = scheduleTimeRepository;
     }
 
+    /**
+     * Method need to find employee by Id
+     * @param id
+     * @return
+     */
     @GetMapping("employee/id/{id}")
     public Employee getEmployeeById(@PathVariable long id){
         System.out.println(employeeRepository.findAll());
         return employeeRepository.findById(id).get();
     }
+
+    /**
+     * Method need to show all employees
+     * @param pageNumber - number of page
+     * @param pageSize - page size
+     * @param sortBy - type of sorting
+     * @return
+     */
     @GetMapping("employee")
     public ResponseEntity<List<Employee>> getEmployees(@RequestParam(defaultValue = "0") int pageNumber,
                                                        @RequestParam(defaultValue = "10") int pageSize,
@@ -52,13 +65,23 @@ public class EmployeeController {
 
     }
 
+    /**
+     * Method need to find necessary employee by firstName
+     * @param firstName - firstName
+     * @return
+     */
     @GetMapping("employee/{firstName}")
     public List<Employee> getEmployeesByFirstName(@PathVariable String firstName){
         return employeeRepository.findAllByFirstName(firstName);
     }
+
+    /**
+     * Method need to add a new employee
+     * @param employee
+     */
     @PostMapping("employee")
     public void addEmployee(@RequestBody EmployeeApiModel employee){
-        System.out.println(employee.getFirstName() + " = " + employee.getLastName() + " = " + employee.getStartTime() + " = " + employee.getEndTime());
+        //mapping dateTime to time, cause sql lib cant parse.
         String dateStartTime = ISODateTimeFormat.dateTimeParser().parseDateTime(employee.getStartTime()).toLocalTime().toString().substring(0,8);
         String dateEndTime = ISODateTimeFormat.dateTimeParser().parseDateTime(employee.getStartTime()).toLocalTime().toString().substring(0,8);
 
@@ -66,6 +89,11 @@ public class EmployeeController {
         time = scheduleTimeRepository.save(time);
         employeeRepository.save(new Employee(0, employee.getFirstName(), employee.getLastName(), time));
     }
+
+    /**
+     * Method need to delete employee
+     * @param id
+     */
     @DeleteMapping("employee/{id}")
     public void deleteEmployee(@PathVariable long id){
         System.out.println(id);
